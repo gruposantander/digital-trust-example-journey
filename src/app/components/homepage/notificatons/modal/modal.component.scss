@@ -1,0 +1,118 @@
+.container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 9;
+  
+    .modal {
+        left: calc(50vw - 300px);
+        position: absolute;
+        width: 600px;
+        margin-top: calc(34vh - 180px);
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 27px 95px 50px 95px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        z-index: 11;
+
+        img.company {
+            // width: 80px;
+            height: 80px;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 0 4px grey;
+            padding: 10px;
+            margin-bottom: 1rem;
+
+            li {
+                p {
+                    color: rgb(99, 99, 99) !important;
+                    margin: 0.2rem;
+                    text-align: center;
+                }
+            }
+        }
+
+        p.contract {
+            margin: 4px 0 !important;
+            font-weight: bold;
+            span {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+
+        p.close {
+            margin: 1rem 0 0;
+            span {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+
+        h1,h2,h3,h4,h5,p {
+            color: black;
+            text-align: center;
+        }
+
+        h3 {
+            margin: 0 0 1rem 0;
+        }
+  
+        h1 {
+            font-size: 22pt;
+            line-height: 30px;
+            margin-top: 28px;
+            margin-bottom: 20px;
+        }
+    
+        p {
+            font-size: 16px;
+            line-height: 23px;
+            margin: 0 0 24px 0;
+        }
+
+        // button {
+        //     height: 50px;
+        //     width: 240px;
+        //     background-color: #ec0000;
+        //     border-radius: 40px;
+        //     display: flex;
+        //     border: 0;
+        //     justify-content: center;
+        //     align-items: center;
+        //     cursor: pointer;
+
+        //     img {
+        //         height: 30px;
+        //         margin-right: 1rem;
+        //     }
+
+        //     h2 {
+        //         color: white;
+        //         font-weight: 100;
+        //         font-family: 'SantanderText';
+        //     }
+        // }
+    }
+}
+  
+.scrim {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: black;
+    opacity: 0.6;
+    z-index: 10;
+}

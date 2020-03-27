@@ -1,5 +1,14 @@
-body {
-    margin: 0;
+html, body {
+  font-family: 'SantanderText', Helvetica, sans-serif;
+  -ms-overflow-x: hidden;
+  overflow-x: hidden;
+  background-color: #22c4ce;
+  height: 100vh;
+  margin: 0;
+}
+
+li {
+  list-style: none;
 }
 
 @font-face {

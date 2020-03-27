@@ -1,0 +1,19 @@
+<div class="master" *ngIf="showNotifications">
+    <div class="tip"></div>
+
+    <body>
+        <h1>You have 1 pending offer</h1>
+        <div class="content">
+            <section (click)="openModal()">
+                <img src="assets/example-inc.svg" alt="">
+
+                <div class="text-content">
+                    <h3>Offer from Example technology systems</h3>
+                    <p>Congratulations! You have an offer from Example technology systems</p>
+                </div>
+            </section>
+        </div>
+    </body>
+</div>
+
+<app-modal *ngIf="showModal"></app-modal>

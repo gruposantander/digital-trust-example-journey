@@ -1,1 +1,38 @@
+<header>
+  <img class="logo" src="assets/quick-jobs-logo.png" alt="logo">
+  <div class="border"></div>
+  <h1 class="qj">Quick Jobs</h1>
+
+  <ul>
+    <li>
+      <h3>Apply</h3>
+    </li>
+    <li>
+      <h3>View roles</h3>
+    </li>
+    <li>
+      <h3 (click)="clickNotifications()">Notifications</h3>
+      <img class="notification" src="assets/notification.png" alt="" (click)="clickNotifications()">
+      <app-notificatons
+        @notifications
+        *ngIf="viewNotifications"></app-notificatons>
+    </li>
+    <li>
+      <h3>My profile</h3>
+      <img class="profile" src="assets/profile.png" alt="">
+    </li>
+  </ul>
+</header>
+
 <router-outlet></router-outlet>
+
+<footer>
+  <ul>
+    <li>
+      <h5><span>Contact us</span></h5>
+      <h5><span>Terms and conditions</span></h5>
+      <h5><span>Work for us</span></h5>
+      <h5><span>Developers</span></h5>
+    </li>
+  </ul>
+</footer>

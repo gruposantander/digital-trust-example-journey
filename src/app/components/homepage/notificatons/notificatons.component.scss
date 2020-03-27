@@ -1,0 +1,59 @@
+h1,h2,h3,p {
+    margin: 0;
+}
+
+.tip {
+    background-color: #0b8187;
+    width: 50px;
+    height: 50px;
+    transform: rotate(45deg);
+    right: -11px;
+    top: 25px;
+    position: absolute;
+}
+
+.master {
+    position: relative;
+}
+
+body {
+    width: 470px;
+    height: min-content;
+    box-sizing: content-box;
+    position: absolute;
+    top: 46px;
+    right: -60px;
+    background-color: #0b8187;
+    padding: 18px;
+    
+    h1 {
+        color: white;
+        margin-bottom: 10px;
+    }
+    
+    .content {
+        background-color: white;
+        color: black;
+        padding: 1rem;
+        cursor: pointer;
+        
+        section {
+            display: flex;
+            flex-direction: row;
+
+            img {
+                height: 30px;
+                margin-right: 1rem;
+                align-self: center;
+            }
+        }
+    }
+
+    .content:hover {
+        background-color: rgb(233, 233, 233);
+    }
+}
+
+app-modal {
+    position: absolute;
+}
