@@ -1,0 +1,22 @@
+button {
+    height: 50px;
+    width: 240px;
+    background-color: #ec0000;
+    border-radius: 40px;
+    display: flex;
+    border: 0;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        height: 30px;
+        margin-right: 1rem;
+    }
+
+    h2 {
+        color: white;
+        font-weight: 100;
+        font-family: 'SantanderText';
+    }
+}
