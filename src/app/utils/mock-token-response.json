@@ -1,0 +1,31 @@
+{
+    "sub": "499117690398af0b650607ea366aeb43e419c4629e0e6f8e3270ffac4dca5be1",
+    "txn": "SF3MJ-YLGUbHE9hS89cRK",
+    "phone_number": "+447724563452",
+    "assertion_claims": {
+        "title": {
+            "result": true
+        },
+        "first_name": {
+            "result": true
+        },
+        "last_name": {
+            "result": true
+        },
+        "birthdate": {
+            "result": true
+        },
+        "country_of_birth": {
+            "result": true
+        },
+        "email": {
+            "result": true
+        }
+    },
+    "nonce": "CJ-E8sRkX_zyv6PLht4JAf1JjMYHWcFD6UXtHX2bFAN",
+    "at_hash": "A54pMLhwpVe9UZYe_VyedA",
+    "aud": "7jKl-X6KmF3l-uDFjfsYX",
+    "exp": 1585320489,
+    "iat": 1585319889,
+    "iss": "https://op.iamid.io"
+}
