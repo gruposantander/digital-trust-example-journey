@@ -1,7 +1,7 @@
 <header>
-  <img class="logo" src="assets/quick-jobs-logo.png" alt="logo">
+  <img class="logo" src="assets/quick-jobs-logo.png" alt="logo" (click)="goHome()">
   <div class="border"></div>
-  <h1 class="qj">Quick Jobs</h1>
+  <h1 class="qj" (click)="goHome()">Quick Jobs</h1>
 
   <ul>
     <li>
@@ -13,13 +13,13 @@
     <li>
       <h3 (click)="clickNotifications()">Notifications</h3>
       <img class="notification" src="assets/notification.png" alt="" (click)="clickNotifications()">
-      <app-notificatons
+      <app-notifications
         @notifications
-        *ngIf="viewNotifications"></app-notificatons>
+        *ngIf="viewNotifications"></app-notifications>
     </li>
     <li>
-      <h3>My profile</h3>
-      <img class="profile" src="assets/profile.png" alt="">
+      <h3 (click)="clickProfile()">My profile</h3>
+      <img class="profile" src="assets/profile.png" alt="" (click)="clickProfile()">
     </li>
   </ul>
 </header>

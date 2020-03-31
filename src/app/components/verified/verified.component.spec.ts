@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NotificatonsComponent } from './notificatons.component';
+import { VerifiedComponent } from './verified.component';
 
-describe('NotificatonsComponent', () => {
-  let component: NotificatonsComponent;
-  let fixture: ComponentFixture<NotificatonsComponent>;
+describe('VerifiedComponent', () => {
+  let component: VerifiedComponent;
+  let fixture: ComponentFixture<VerifiedComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificatonsComponent ]
+      declarations: [ VerifiedComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotificatonsComponent);
+    fixture = TestBed.createComponent(VerifiedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

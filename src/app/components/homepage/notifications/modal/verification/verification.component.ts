@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// import { getRequestUri } from './sdk';
+import { SDKService } from '../../../../../services/sdk.service';
 
 @Component({
   selector: 'app-verification',
@@ -7,12 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./verification.component.scss']
 })
 export class VerificationComponent {
+  constructor(private readonly sdkService: SDKService) { }
 
-  constructor() { }
-
-  verify() {
-    // getRequestUri();
+  verifyUser(): void {
+    this.sdkService.getRequestUri();
   }
 }
-
-

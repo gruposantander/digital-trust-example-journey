@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './components/homepage/homepage.component';
-import { NotificatonsComponent } from './components/homepage/notificatons/notificatons.component';
+import { VerifiedComponent } from './components/verified/verified.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
-  { path: 'notifications', component: NotificatonsComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: 'digital-id', component: VerifiedComponent },
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({

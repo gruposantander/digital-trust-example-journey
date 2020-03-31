@@ -1,11 +1,11 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-notificatons',
-  templateUrl: './notificatons.component.html',
-  styleUrls: ['./notificatons.component.scss']
+  selector: 'app-notifications',
+  templateUrl: './notifications.component.html',
+  styleUrls: ['./notifications.component.scss']
 })
-export class NotificatonsComponent {
+export class NotificationsComponent {
   public showNotifications = true;
   public showModal = false;
 

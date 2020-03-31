@@ -1,5 +1,5 @@
 <div *ngIf="openModal" class="container" @modal>
-    <div class="modal" @modal>
+    <div class="modal" [style.margin-top.px]="modalTop" @modal>
         <img src="assets/example-inc.svg" class="company">
         <h1>Congratulations John!</h1>
         <p>Example technology systems would like to offer you a position as their Head of Sales. The outlines of the
@@ -16,12 +16,14 @@
             </li>
             <p class="contract"><span>View full contract</span></p>
         </ul>
-        <h3><strong>To complete the proccess and accept the offer, we need to confirm your identity.</strong></h3>
-        <!-- <button>
-            <img src="assets/sflame.svg" alt="flame">
-            <h2>Verify with Santander</h2>
-        </button> -->
-        <app-verification></app-verification>
+        <div class="button-container">
+            <button (click)="accept()">Accept</button>
+            <button>Decline</button>
+        </div>
+        <div class="verification-container" *ngIf="showVerificationSteps">
+            <h3><strong>To complete the proccess and accept the offer, we need to confirm your identity.</strong></h3>
+            <app-verification></app-verification>
+        </div>
         <p class="close" (click)="closeModal()"><span>Close</span></p>
     </div>
 

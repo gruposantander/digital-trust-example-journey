@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { SDKService } from './services/sdk.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +21,19 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class AppComponent {
   public viewNotifications = false;
 
+  constructor(
+    private router: Router
+  ) { }
+
   public clickNotifications(): void {
     this.viewNotifications = !this.viewNotifications;
+  }
+
+  public clickProfile(): void {
+    this.router.navigate(['/profile']);
+  }
+
+  public goHome(): void {
+    this.router.navigate(['/']);
   }
 }

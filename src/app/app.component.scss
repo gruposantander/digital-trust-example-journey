@@ -14,8 +14,9 @@ header {
     img.logo {
         width: 70px;
         height: 70px;
+        cursor: pointer;
     }
-
+    
     .border {
         width: 3px;
         height: 40px;
@@ -24,8 +25,9 @@ header {
         align-self: center;
         margin-left: 1rem;
     }
-
+    
     h1.qj {
+        cursor: pointer;
         display: flex;
         flex: 1;
         margin: 0 1rem;

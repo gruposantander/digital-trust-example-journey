@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal',
@@ -27,6 +28,8 @@ import { trigger, transition, animate, style } from '@angular/animations';
 })
 export class ModalComponent implements OnInit {
   public openModal = true;
+  public showVerificationSteps = false;
+  public modalTop = 100;
 
   constructor() { }
 
@@ -35,5 +38,10 @@ export class ModalComponent implements OnInit {
 
   public closeModal(): void {
     this.openModal = false;
+  }
+
+  public accept(): void {
+    this.modalTop = 30;
+    this.showVerificationSteps = true;
   }
 }
