@@ -124,6 +124,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "digital-id-example-frontend"
 }
