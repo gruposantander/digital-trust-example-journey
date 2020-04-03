@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SDKService } from '../../../../../services/sdk.service';
+import { SDKService } from '../../../services/sdk.service';
 
 @Component({
   selector: 'app-verification',

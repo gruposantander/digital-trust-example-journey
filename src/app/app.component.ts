@@ -22,7 +22,8 @@ export class AppComponent {
   public viewNotifications = false;
 
   constructor(
-    private router: Router
+    private router: Router,
+    public readonly sdkService: SDKService
   ) { }
 
   public clickNotifications(): void {

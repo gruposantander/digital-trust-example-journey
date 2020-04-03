@@ -12,7 +12,8 @@
     </li>
     <li>
       <h3 (click)="clickNotifications()">Notifications</h3>
-      <img class="notification" src="assets/notification.png" alt="" (click)="clickNotifications()">
+      <img class="notification" src="assets/notification.png" alt="" (click)="clickNotifications()"
+        *ngIf="!sdkService.verified">
       <app-notifications
         @notifications
         *ngIf="viewNotifications"></app-notifications>

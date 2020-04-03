@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notifications',
@@ -9,8 +10,10 @@ export class NotificationsComponent {
   public showNotifications = true;
   public showModal = false;
 
-  public openModal(): void {
-    this.showModal = !this.showModal;
+  constructor(private readonly router: Router) { }
+
+  public goToProfile(): void {
     this.showNotifications = !this.showNotifications;
+    this.router.navigate(['/profile']);
   }
 }

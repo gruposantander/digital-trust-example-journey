@@ -1,12 +1,13 @@
 button {
     height: 50px;
-    width: 240px;
+    width: 230px;
     background-color: #ec0000;
     border-radius: 40px;
     display: flex;
     border: 0;
     justify-content: center;
     align-items: center;
+    margin: 2rem auto 0;
     cursor: pointer;
 
     img {

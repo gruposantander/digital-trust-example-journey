@@ -1,6 +1,9 @@
-<div class="card">
-    <h1>Successfuly verified</h1>
-    <div class="circle-loader">
-        <div class="checkmark draw"></div>
+<div class="card" @card>
+    <h1 @header *ngIf="_verified">Successfuly verified</h1>
+    <h1 @header *ngIf="!_verified">Checking your information</h1>
+    <div class="circle-loader" [class.load-complete]="_verified">
+        <div class="draw" [class.checkmark]="_verified"></div>
     </div>
 </div>
+
+<div class="background" @scrim></div>

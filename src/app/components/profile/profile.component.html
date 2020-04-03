@@ -1,24 +1,55 @@
+<app-verified
+    [verified]="verified"
+    *ngIf="displayVerifyLoader"
+    @verifyLoader>
+</app-verified>
+
 <div class="container">
     <div class="card profile">
-        <h1>Your profile</h1>
-        <h5 class="req-ver">Verification required</h5>
+        <h1 class="your-profile" *ngIf="!verified">Your profile
+            <img src="assets/shield-disabled.svg"
+                alt="not-verified"
+                width="40px">
+        </h1>
+        <h1 class="your-profile"
+            *ngIf="verified">
+            Your profile
+            <img src="assets/shield.svg"
+                width="40px"
+                alt="verified"
+                @verified>
+        </h1>
+        <h3 class="req-ver" *ngIf="!(sdkService.verified && !displayVerifyLoader)">Verification required</h3>
         <div class="profile-container">
-            <img src="assets/profile.png" alt="">
-            <div>
-                <h4>Mrs Laura Lavel</h4>
-                <h4>laura@santanderlabs.io</h4>
-                <h4>07720647869</h4>
-                <h4>91 Savannah Falls, Rotherham, CE0YYW, United Kingdom</h4>
+            <img src="assets/profile.png" alt="profile">
+            <div *ngIf="userDetails">
+                <h4 class="properties">Name: {{ userDetails.title }} {{ userDetails.given_name }}
+                    {{ userDetails.family_name }}</h4>
+                <h4 class="properties">Country of Birth: {{ userDetails.country_of_birth }}</h4>
+                <h4 class="properties">Address: {{ userDetails.address.street_address }},
+                    {{ userDetails.address.locality }},
+                    {{ userDetails.address.postal_code }}, {{ userDetails.address.country }}</h4>
+                <h4 class="properties" *ngIf="userDetails.email">Email: {{ userDetails.email }}</h4>
+                <h4 class="properties" *ngIf="userDetails.phone_number">Phone number: {{ userDetails.phone_number }}
+                </h4>
             </div>
         </div>
         <h4>Profile description</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse condimentum nibh et purus feugiat, eget
-            malesuada massa consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-            Curae; Nam ac mi vitae purus porta elementum ac placerat ex. Aenean a auctor erat. Integer sapien orci,
-            egestas eget sodales id, pharetra et dolor. Morbi non lacus dolor. Class aptent taciti sociosqu ad litora
-            torquent per conubia nostra, per inceptos himenaeos. In ullamcorper quam ut nisl cursus, eget gravida felis
-            eleifend. Aliquam luctus volutpat faucibus. Maecenas facilisis maximus turpis, ut semper massa aliquet eu.
-            Nam consectetur felis eu quam elementum mattis. Etiam sit amet ante nisi.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse condimentum nibh et purus feugiat,
+            eget malesuada massa consequat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+            cubilia Curae; Nam ac mi vitae purus porta elementum ac placerat ex. Aenean a auctor erat. Integer
+            sapien orci,
+            <br>
+            <br>
+            egestas eget sodales id, pharetra et dolor. Morbi non lacus dolor. Class aptent taciti sociosqu ad
+            litora torquent per conubia nostra, per inceptos himenaeos. In ullamcorper quam ut nisl cursus, eget
+            gravida
+            felis eleifend. Aliquam luctus volutpat faucibus. Maecenas facilisis maximus turpis, ut semper massa
+            <br>
+            <br>
+            aliquet
+            eu. Nam consectetur felis eu quam elementum mattis. Etiam sit amet ante nisi.</p>
+        <app-verification *ngIf="!(sdkService.verified && !displayVerifyLoader)"></app-verification>
     </div>
 
     <div class="application">
@@ -45,8 +76,11 @@
                         <p><img src="assets/company.svg" alt="" class="icon">Example technology systems</p>
                     </li>
                     <li>
-                        <p class="pending-offer"><img src="assets/timer.svg" alt="" class="icon">Pending offer -
-                            recieved 18 minutes ago</p>
+                        <p class="pending-offer" *ngIf="!verified"><img
+                                src="assets/timer.svg" alt="" class="icon">Pending actions - 18
+                            minutes ago</p>
+                        <p *ngIf="verified"><img src="assets/timer.svg" alt=""
+                                class="icon"> Applied 8 days ago</p>
                     </li>
                 </ul>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse condimentum nibh et purus
