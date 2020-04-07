@@ -7,7 +7,7 @@ const { VerifiedIdClient, InitiateAuthorizeRequestBuilder, TokenRequestBuilder }
 const resolve = require('path').resolve
 
 const port = 8000;
-const wellKnown = 'https://op-iamid-verifiedid-pro.e4ff.pro-eu-west-1.openshiftapps.com/.well-known/openid-configuration';
+const wellKnown = 'https://op.iamid.io/.well-known/openid-configuration';
 const clientId = 'IIvRB-z9e0mTVDfrXpAsy';
 
 let verified = false;
@@ -28,7 +28,7 @@ let userDetails = {
 app.use(bodyParser.json());
 
 app.get('/initiate-authorize', async (req, res) => {
-    const claims = new Claims()
+    const claims = new Claims();
     claims.email()
         .withEssential(true)
         .withPurpose('Please share the email address that you wish for us and any recruitment teams to contact you on.')
@@ -38,7 +38,7 @@ app.get('/initiate-authorize', async (req, res) => {
     claims.address()
         .withEssential(true)
 
-    const assertionClaims = new AssertionClaims()
+    const assertionClaims = new AssertionClaims();
     assertionClaims.givenName()
         .equal(userDetails.given_name)
         .withEssential(true)
@@ -57,28 +57,29 @@ app.get('/initiate-authorize', async (req, res) => {
         .withAssertion(Address.country().eq(userDetails.address.country))
         .withPurpose('We want to verify your address is correct, so that we can address any correspondence with you, and between yourself and any future employers correctly in a professional manner. We also need to ensure that you have a place of residence within the UK.')
 
+    let verifyidclient;
     try {
-        const verifyidclient = await VerifiedIdClient.createInstance({
+        verifyidclient = await VerifiedIdClient.createInstance({
             wellKnownURI: wellKnown,
             privateJWK: resolve('./private.json'),
             clientId: clientId,
-        })
+        });
         await verifyidclient.setUpClient();
-
-        const request = new InitiateAuthorizeRequestBuilder()
-            .withRedirectURI('http://localhost:4201/profile')
-            .withAssertionClaims(assertionClaims)
-            .withClaims(claims)
-            .withPurpose('We want to check your details are correct before allowing you to formally accept any job offers.')
-            .build()
-
-        const initiateAuthorize = await verifyidclient.initiateAuthorize(request)
-
-        res.status(200).json(initiateAuthorize.redirectionUri);
     } catch (e) {
-        // console.log(e);
-        res.status(503).json(e);
+        res.status(503).json({ error: e, error_description: 'Unable to create client instance - unset proxies' });
+        return;
     }
+
+    const request = new InitiateAuthorizeRequestBuilder()
+        .withRedirectURI('http://localhost:4201/profile')
+        .withAssertionClaims(assertionClaims)
+        .withClaims(claims)
+        .withPurpose('We want to check your details are correct before allowing you to formally accept any job offers.')
+        .build()
+
+    const initiateAuthorize = await verifyidclient.initiateAuthorize(request)
+
+    res.status(200).json(initiateAuthorize.redirectionUri);
 });
 
 app.post('/token', async (req, res) => {
