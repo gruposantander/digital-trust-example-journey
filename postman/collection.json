@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "dbba84b0-b52b-4264-9728-f19b797b7dd7",
+		"name": "QuickJobs",
+		"description": "{\n\t\"user\": \"MB6anukh7u9\",\n\t\"pass\": \"Testing123!\"\n}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/user-info",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user-info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User info",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Mrs\",\n\t\"given_name\": \"Lauras\",\n\t\"family_name\": \"Lavine\",\n\t\"country_of_birth\": \"United Kingdom\",\n\t\"address\": {\n\t\t\"street_address\": \"102 Mangrove Lane\",\n\t\t\"locality\": \"Doncaster\",\n\t\t\"postal_code\": \"C128VW\",\n\t\t\"country\": \"Scotland\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/user-info",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user-info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verified",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/verified?value=true",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"verified"
+					],
+					"query": [
+						{
+							"key": "value",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset journey",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/reset",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"reset"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

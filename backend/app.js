@@ -9,10 +9,20 @@ const resolve = require('path').resolve
 const port = 8000;
 const wellKnown = 'https://op.iamid.io/.well-known/openid-configuration';
 const clientId = 'Ds2UChhNmck7Jcakyxvgi';
-// const clientId = 'MSBF3dxJaBIzKFN8eFCzf';
-// const clientId = 'IIvRB-z9e0mTVDfrXpAsy';
 
 let verified = false;
+let defaultUserDetails = {
+    title: "Mrs",
+    given_name: "Laura",
+    family_name: "Lavine",
+    country_of_birth: "GB",
+    address: {
+        street_address: '91, Savannah Falls',
+        locality: 'Rotherham',
+        postal_code: 'CE0YYW',
+        country: 'United Kingdom',
+    }
+}
 let userDetails = {
     title: "Mrs",
     given_name: "Laura",
@@ -73,7 +83,6 @@ app.get('/initiate-authorize', async (req, res) => {
             clientId: clientId,
         });
         await verifyidclient.setUpClient();
-        console.log('SUCCESS')
     } catch (e) {
         res.status(500).json({ error: e, error_description: 'Unable to create client instance - unset proxies' });
         return;
@@ -151,21 +160,44 @@ app.get('/verified', async (req, res) => {
     }
 });
 
+app.post('/verified', async (req, res) => {
+    try {
+        verified = req.query.value === 'true';
+        res.status(200).send(verified);
+    } catch (err) {
+        res.status(400).json({ error: 'Not valid value for verified', message: 'Provide a query param with a boolean eg. ?value=true' })
+    }
+});
+
+app.patch('/reset', async (req, res) => {
+    userDetails = defaultUserDetails;
+    verified = false;
+    res.status(200).send('Successfully reset');
+});
+
 function addSharedData(tokenObject) {
     if (tokenObject.email) userDetails.email = tokenObject.email;
     if (tokenObject.phone_number) userDetails.phone_number = tokenObject.phone_number;
 }
 
-function checkAssertions(assertionClaims) {
-    let success = true;
+function checkAssertions(returnedAssertionClaims) {
     const essentialFields = ['family_name', 'given_name'];
+    let claims = [];
+    let success = true;
 
-    Object.entries(assertionClaims).forEach(element => {
-        console.log(element[1].result, essentialFields.includes(element[0]));
-        if (!element[1].result && essentialFields.includes(element[0])) {
-            success = false;
-        }
+    Object.keys(returnedAssertionClaims).forEach(name => claims.push(name));
+
+    essentialFields.forEach(field => {
+        if (!claims.includes(field)) { success = false; }
     });
+
+    if (success) {
+        Object.entries(returnedAssertionClaims).forEach(element => {
+            if (!element[1].result && essentialFields.includes(element[0])) {
+                success = false;
+            }
+        });
+    }
 
     return success;
 }
