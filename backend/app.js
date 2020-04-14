@@ -3,15 +3,16 @@ const app = express();
 const bodyParser = require('body-parser');
 const { Claims, AssertionClaims, Address } = require('@gruposantander/rp-client-typescript').Model
 const { VerifiedIdClient, InitiateAuthorizeRequestBuilder, TokenRequestBuilder } = require('@gruposantander/rp-client-typescript').Client
-
+const Joi = require('@hapi/joi');
 const resolve = require('path').resolve
 
 const port = 8000;
 const wellKnown = 'https://op.iamid.io/.well-known/openid-configuration';
-const clientId = 'IIvRB-z9e0mTVDfrXpAsy';
+const clientId = 'Ds2UChhNmck7Jcakyxvgi';
+// const clientId = 'MSBF3dxJaBIzKFN8eFCzf';
+// const clientId = 'IIvRB-z9e0mTVDfrXpAsy';
 
 let verified = false;
-
 let userDetails = {
     title: "Mrs",
     given_name: "Laura",
@@ -28,13 +29,12 @@ let userDetails = {
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    next()
+    next();
 });
 
 app.get('/initiate-authorize', async (req, res) => {
@@ -45,8 +45,6 @@ app.get('/initiate-authorize', async (req, res) => {
     claims.phoneNumber()
         .withEssential(true)
         .withPurpose('Please share the phone number that you wish for us and any recruitment teams to contact you on.')
-    claims.address()
-        .withEssential(true)
 
     const assertionClaims = new AssertionClaims();
     assertionClaims.givenName()
@@ -75,21 +73,26 @@ app.get('/initiate-authorize', async (req, res) => {
             clientId: clientId,
         });
         await verifyidclient.setUpClient();
+        console.log('SUCCESS')
     } catch (e) {
-        res.status(503).json({ error: e, error_description: 'Unable to create client instance - unset proxies' });
+        res.status(500).json({ error: e, error_description: 'Unable to create client instance - unset proxies' });
         return;
     }
 
-    const request = new InitiateAuthorizeRequestBuilder()
-        .withRedirectURI('http://localhost:4201/profile')
-        .withAssertionClaims(assertionClaims)
-        .withClaims(claims)
-        .withPurpose('We want to check your details are correct before allowing you to formally accept any job offers.')
-        .build()
+    try {
+        const request = new InitiateAuthorizeRequestBuilder()
+            .withRedirectURI('http://localhost:4201/profile')
+            .withAssertionClaims(assertionClaims)
+            .withClaims(claims)
+            .withPurpose('We want to check your details are correct before allowing you to formally accept any job offers.')
+            .build()
 
-    const initiateAuthorize = await verifyidclient.initiateAuthorize(request)
-
-    res.status(200).json(initiateAuthorize.redirectionUri);
+        const initiateAuthorize = await verifyidclient.initiateAuthorize(request)
+        res.status(200).json(initiateAuthorize.redirectionUri);
+    } catch (err) {
+        console.log(err);
+        res.status(503).json({});
+    }
 });
 
 app.post('/token', async (req, res) => {
@@ -110,7 +113,7 @@ app.post('/token', async (req, res) => {
             .build();
         const token = await verifyidclient.token(request);
 
-        await addSharedData(token);
+        addSharedData(token);
 
         if (checkAssertions(token.assertion_claims)) {
             verified = true;
@@ -127,6 +130,19 @@ app.get('/user-info', async (req, res) => {
     res.status(200).json(userDetails);
 });
 
+app.post('/user-info', async (req, res) => {
+    try {
+        const { error } = userValidation(req.body);
+        if (error) res.status(400).json({ message: error.message });
+
+        userDetails = req.body;
+        verified = false;
+        res.status(200).json(userDetails);
+    } catch (e) {
+        res.status(400).json(e);
+    }
+});
+
 app.get('/verified', async (req, res) => {
     if (verified) {
         res.status(200).send();
@@ -135,21 +151,48 @@ app.get('/verified', async (req, res) => {
     }
 });
 
-async function addSharedData(tokenObject) {
+function addSharedData(tokenObject) {
     if (tokenObject.email) userDetails.email = tokenObject.email;
     if (tokenObject.phone_number) userDetails.phone_number = tokenObject.phone_number;
 }
 
-async function checkAssertions(assertionClaims) {
+function checkAssertions(assertionClaims) {
     let success = true;
+    const essentialFields = ['family_name', 'given_name'];
 
-    Object.values(assertionClaims).forEach(element => {
-        if (!element.result) {
+    Object.entries(assertionClaims).forEach(element => {
+        console.log(element[1].result, essentialFields.includes(element[0]));
+        if (!element[1].result && essentialFields.includes(element[0])) {
             success = false;
         }
     });
 
     return success;
+}
+
+const userValidation = data => {
+    const schema = Joi.object({
+        given_name: Joi.string()
+            .required(),
+        family_name: Joi.string()
+            .required(),
+        country_of_birth: Joi.string()
+            .required(),
+        title: Joi.string()
+            .required(),
+        address: Joi.object({
+            street_address: Joi.string()
+                .required(),
+            locality: Joi.string()
+                .required(),
+            postal_code: Joi.string()
+                .required(),
+            country: Joi.string()
+                .required(),
+        }).required(),
+    })
+
+    return schema.validate(data);
 }
 
 app.listen(port, () => { console.log('Started on port', port) });
