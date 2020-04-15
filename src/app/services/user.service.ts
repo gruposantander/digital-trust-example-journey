@@ -14,9 +14,6 @@ export class UserService {
   }
 
   public getUserVerified(): Observable<any> {
-    return this.http.get('http://localhost:8000/verified').pipe(
-      map(res => res),
-      take(1),
-      catchError(err => throwError(err)));
+    return this.http.get('http://localhost:8000/verified').pipe(take(1));
   }
 }
