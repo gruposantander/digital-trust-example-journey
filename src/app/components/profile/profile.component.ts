@@ -1,8 +1,7 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { SDKService } from '../../services/sdk.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { transition, style, animate, trigger } from '@angular/animations';
-import { Observable } from 'rxjs';
+import { SDKService } from '../../services/sdk.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -60,12 +59,15 @@ export class ProfileComponent implements OnInit {
   }
 
   private getUser() {
-    this.userService.getUserDetails().subscribe(res => {
-      this.userDetails = res;
-    });
+    this.userService.getUserDetails().subscribe(res =>
+      this.userDetails = res
+    );
   }
 
   private getVerified() {
-    this.userService.getUserVerified().subscribe(() => this.verified = true, () => this.verified = false);
+    this.userService.getUserVerified().subscribe(
+      () => this.verified = true,
+      () => this.verified = false
+    );
   }
 }

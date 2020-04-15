@@ -1,9 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';    
-import { Observable, throwError } from 'rxjs';
-import { map, take, catchError, switchMap } from 'rxjs/operators';
-import { ConfigService } from './config.service';
+import { Observable } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { Config } from '../models/config.model';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +15,14 @@ export class UserService {
   ) { }
 
   public getUserDetails(): Observable<any> {
-    return this.configService.getConfig().pipe(switchMap((config: Config) => {
-      return this.http.get(`${config.apiBaseUrl}/user-info`).pipe(map(res => res), take(1));
-    }))
+    return this.configService.getConfig().pipe(switchMap((config: Config) =>
+      this.http.get(`${config.apiBaseUrl}/user-info`).pipe(take(1))
+    ));
   }
 
   public getUserVerified(): Observable<any> {
-    return this.configService.getConfig().pipe(switchMap((config: Config) => {
-      return this.http.get(`${config.apiBaseUrl}/verified`).pipe(
-        map(res => res),
-        take(1),
-        catchError(err => throwError(err)));
-    }))
+    return this.configService.getConfig().pipe(switchMap((config: Config) =>
+      this.http.get(`${config.apiBaseUrl}/verified`).pipe(take(1))
+    ));
   }
 }
