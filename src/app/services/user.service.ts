@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { Config } from '../models/config.model';
 import { ConfigService } from './config.service';
 
@@ -15,9 +15,9 @@ export class UserService {
   ) { }
 
   public getUserDetails(): Observable<any> {
-    return this.configService.getConfig().pipe(switchMap((config: Config) => {
-      return this.http.get(`${config.apiBaseUrl}/user-info`).pipe(map(res => res), take(1));
-    }));
+    return this.configService.getConfig().pipe(switchMap((config: Config) =>
+      this.http.get(`${config.apiBaseUrl}/user-info`).pipe(take(1))
+    ));
   }
 
   public getUserVerified(): Observable<any> {
