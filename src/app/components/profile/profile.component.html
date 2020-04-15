@@ -24,7 +24,7 @@
                 @verified>
         </h1>
 
-        <h3 class="req-ver" *ngIf="!(sdkService.verified && !displayVerifyLoader)">Verification required</h3>
+        <h3 class="req-ver" *ngIf="!verified">Verification required</h3>
 
         <div class="profile-container">
             <img src="assets/profile.png" alt="profile">
