@@ -1,19 +1,28 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, take, catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
+import { Config } from '../models/config.model';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private readonly http: HttpClient) { }
+  constructor(
+    private readonly http: HttpClient,
+    private readonly configService: ConfigService
+  ) { }
 
   public getUserDetails(): Observable<any> {
-    return this.http.get('http://localhost:8000/user-info').pipe(map(res => res), take(1));
+    return this.configService.getConfig().pipe(switchMap((config: Config) =>
+      this.http.get(`${config.apiBaseUrl}/user-info`).pipe(take(1))
+    ));
   }
 
   public getUserVerified(): Observable<any> {
-    return this.http.get('http://localhost:8000/verified').pipe(take(1));
+    return this.configService.getConfig().pipe(switchMap((config: Config) =>
+      this.http.get(`${config.apiBaseUrl}/verified`).pipe(take(1))
+    ));
   }
 }

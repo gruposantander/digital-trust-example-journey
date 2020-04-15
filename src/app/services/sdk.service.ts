@@ -1,25 +1,30 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { switchMap, take, tap } from 'rxjs/operators';
+import { Config } from '../models/config.model';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SDKService {
-  private baseUrl = 'http://localhost:8000';
   public verified = false;
 
-  constructor(private readonly http: HttpClient) {
-  }
+  constructor(
+    private readonly http: HttpClient,
+    private readonly configService: ConfigService
+  ) { }
 
-  public getRequestUri(): void {
-    this.http.get(`${this.baseUrl}/initiate-authorize`).subscribe((res: string) => {
-      window.location.href = res;
-    });
+  public getRequestUri(): Observable<any> {
+    return this.configService.getConfig().pipe(switchMap((config: Config) =>
+      this.http.get(`${config.apiBaseUrl}/initiate-authorize`).pipe(take(1))
+    ));
   }
 
   public extractData(code: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/token`, { code: code }).pipe(tap(res => this.verified = true));
+    return this.configService.getConfig().pipe(switchMap((config: Config) =>
+      this.http.post(`${config.apiBaseUrl}/token`, { code: code }).pipe(tap(() => this.verified = true))
+    ));
   }
 }

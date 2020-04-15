@@ -1,8 +1,7 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { SDKService } from '../../services/sdk.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { transition, style, animate, trigger } from '@angular/animations';
-import { Observable } from 'rxjs';
+import { SDKService } from '../../services/sdk.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -47,8 +46,7 @@ export class ProfileComponent implements OnInit {
       this.displayVerifyLoader = true;
       this.router.navigate(['/profile']);
 
-      this.sdkService.extractData(code).subscribe((res) => {
-        console.log('SUCCESS: ', res);
+      this.sdkService.extractData(code).subscribe(() => {
         setTimeout(() => {
           this.getVerified();
 
@@ -57,8 +55,7 @@ export class ProfileComponent implements OnInit {
             this.getUser();
           }, 1000);
         }, 1000);
-      }, (err) => {
-        console.log('ERROR: ', err);
+      }, () => {
         setTimeout(() => {
           this.displayVerifyLoader = false;
           this.getUser();
@@ -68,18 +65,15 @@ export class ProfileComponent implements OnInit {
   }
 
   private getUser() {
-    this.userService.getUserDetails().subscribe(res => {
-      this.userDetails = res;
-    });
+    this.userService.getUserDetails().subscribe(res =>
+      this.userDetails = res
+    );
   }
 
   private getVerified() {
-    this.userService.getUserVerified().subscribe(() => this.verified = true,
-      (e) => {
-        console.log(e);
-
-        this.error = true;
-        this.verified = false;
-      });
+    this.userService.getUserVerified().subscribe(
+      () => this.verified = true,
+      () => this.verified = false
+    );
   }
 }

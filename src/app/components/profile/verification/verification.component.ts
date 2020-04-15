@@ -9,7 +9,9 @@ import { SDKService } from '../../../services/sdk.service';
 export class VerificationComponent {
   constructor(private readonly sdkService: SDKService) { }
 
-  verifyUser(): void {
-    this.sdkService.getRequestUri();
+  public verifyUser(): void {
+    this.sdkService.getRequestUri().subscribe((res: string) => {
+      window.location.href = res;
+    });
   }
 }
