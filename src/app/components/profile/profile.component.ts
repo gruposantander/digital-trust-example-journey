@@ -47,8 +47,7 @@ export class ProfileComponent implements OnInit {
       this.displayVerifyLoader = true;
       this.router.navigate(['/profile']);
 
-      this.sdkService.extractData(code).subscribe((res) => {
-        console.log('SUCCESS: ', res);
+      this.sdkService.extractData(code).subscribe(() => {
         setTimeout(() => {
           this.getVerified();
 
@@ -57,8 +56,7 @@ export class ProfileComponent implements OnInit {
             this.getUser();
           }, 1000);
         }, 1000);
-      }, (err) => {
-        console.log('ERROR: ', err);
+      }, () => {
         setTimeout(() => {
           this.displayVerifyLoader = false;
           this.getUser();
@@ -75,9 +73,7 @@ export class ProfileComponent implements OnInit {
 
   private getVerified() {
     this.userService.getUserVerified().subscribe(() => this.verified = true,
-      (e) => {
-        console.log(e);
-
+      () => {
         this.error = true;
         this.verified = false;
       });
