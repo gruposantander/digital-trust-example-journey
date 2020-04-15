@@ -25,9 +25,10 @@ import { UserService } from '../../services/user.service';
   ]
 })
 export class ProfileComponent implements OnInit {
-  public displayVerifyLoader;
-  public userDetails: string[];
+  public displayVerifyLoader: boolean;
+  public userDetails: any;
   public verified: boolean;
+  public error = null;
 
   constructor(
     public readonly sdkService: SDKService,
@@ -46,7 +47,8 @@ export class ProfileComponent implements OnInit {
       this.displayVerifyLoader = true;
       this.router.navigate(['/profile']);
 
-      this.sdkService.extractData(code).subscribe(res => {
+      this.sdkService.extractData(code).subscribe((res) => {
+        console.log('SUCCESS: ', res);
         setTimeout(() => {
           this.getVerified();
 
@@ -54,6 +56,12 @@ export class ProfileComponent implements OnInit {
             this.displayVerifyLoader = false;
             this.getUser();
           }, 1000);
+        }, 1000);
+      }, (err) => {
+        console.log('ERROR: ', err);
+        setTimeout(() => {
+          this.displayVerifyLoader = false;
+          this.getUser();
         }, 1000);
       });
     }
@@ -66,6 +74,12 @@ export class ProfileComponent implements OnInit {
   }
 
   private getVerified() {
-    this.userService.getUserVerified().subscribe(() => this.verified = true, () => this.verified = false);
+    this.userService.getUserVerified().subscribe(() => this.verified = true,
+      (e) => {
+        console.log(e);
+
+        this.error = true;
+        this.verified = false;
+      });
   }
 }

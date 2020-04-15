@@ -61,8 +61,6 @@ $check-color: $brand-success;
 }
 
 .checkmark {
-  // display: none;
-  
   &.draw:after {
     animation-duration: 800ms;
     animation-timing-function: ease;
@@ -83,6 +81,11 @@ $check-color: $brand-success;
     top: $check-height;
     position: absolute;
   }
+}
+
+img.cross {
+  width: 110px;
+  margin-bottom: 2rem;
 }
 
 @keyframes loader-spin {

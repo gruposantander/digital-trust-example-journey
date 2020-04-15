@@ -1,16 +1,20 @@
 <app-verified
     [verified]="verified"
+    [error]="error"
     *ngIf="displayVerifyLoader"
     @verifyLoader>
 </app-verified>
 
 <div class="container">
     <div class="card profile">
-        <h1 class="your-profile" *ngIf="!verified">Your profile
+        <h1 class="your-profile"
+            *ngIf="!verified">
+            Your profile
             <img src="assets/shield-disabled.svg"
                 alt="not-verified"
                 width="40px">
         </h1>
+
         <h1 class="your-profile"
             *ngIf="verified">
             Your profile
@@ -19,7 +23,9 @@
                 alt="verified"
                 @verified>
         </h1>
+
         <h3 class="req-ver" *ngIf="!(sdkService.verified && !displayVerifyLoader)">Verification required</h3>
+
         <div class="profile-container">
             <img src="assets/profile.png" alt="profile">
             <div *ngIf="userDetails">
@@ -49,7 +55,7 @@
             <br>
             aliquet
             eu. Nam consectetur felis eu quam elementum mattis. Etiam sit amet ante nisi.</p>
-        <app-verification *ngIf="!(sdkService.verified && !displayVerifyLoader)"></app-verification>
+        <app-verification *ngIf="!verified"></app-verification>
     </div>
 
     <div class="application">

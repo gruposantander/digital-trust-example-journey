@@ -30,9 +30,17 @@ import { SDKService } from '../../services/sdk.service';
 })
 export class VerifiedComponent {
   public _verified: boolean;
+  public _error: boolean;
 
   @Input()
   set verified(val: boolean) {
     this._verified = val;
+  }
+
+  @Input()
+  set error(val: boolean) {
+    if (val === false) {
+      this._error = val;
+    }
   }
 }

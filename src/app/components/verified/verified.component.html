@@ -1,9 +1,11 @@
 <div class="card" @card>
-    <h1 @header *ngIf="_verified">Successfuly verified</h1>
-    <h1 @header *ngIf="!_verified">Checking your information</h1>
-    <div class="circle-loader" [class.load-complete]="_verified">
-        <div class="draw" [class.checkmark]="_verified"></div>
+    <h1 @header *ngIf="_verified && !_error">Successfuly verified</h1>
+    <h1 @header *ngIf="!_verified && !_error">Checking your information</h1>
+    <div class="circle-loader" *ngIf="!_error" [class.load-complete]="_verified && !_error">
+        <div class="draw" [class.checkmark]="_verified && !_error"></div>
     </div>
+    <h1 @header *ngIf="_error">Unable to verify</h1>
+    <img class="cross" src="assets/cross.svg" *ngIf="_error">
 </div>
 
 <div class="background" @scrim></div>
