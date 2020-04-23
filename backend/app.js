@@ -6,9 +6,11 @@ const { VerifiedIdClient, InitiateAuthorizeRequestBuilder, TokenRequestBuilder }
 const Joi = require('@hapi/joi');
 const resolve = require('path').resolve
 
-const port = 8000;
-const wellKnown = 'https://op.iamid.io/.well-known/openid-configuration';
-const clientId = 'Ds2UChhNmck7Jcakyxvgi';
+const port = process.env.PORT || 8000;
+const wellKnown = process.env.WELL_KNOWN_URL || 'https://live.iamid.io/.well-known/openid-configuration';
+const clientId = process.env.CLIENT_ID || 'Ds2UChhNmck7Jcakyxvgi';
+const redirectUri = process.env.REDIRECT_URI ||  'http://localhost:4201/profile';
+const staticsFolderRelativePath = process.env.STATICS_FOLDER || '/../dist/digital-id-example-frontend';
 
 let verified = false;
 let defaultUserDetails = {
@@ -35,6 +37,9 @@ let userDetails = {
         country: 'United Kingdom',
     }
 }
+
+app.use( express.static( __dirname + staticsFolderRelativePath))
+app.use('/profile', express.static( __dirname + staticsFolderRelativePath))
 
 app.use(bodyParser.json());
 
@@ -90,7 +95,7 @@ app.get('/initiate-authorize', async (req, res) => {
 
     try {
         const request = new InitiateAuthorizeRequestBuilder()
-            .withRedirectURI('http://localhost:4201/profile')
+            .withRedirectURI(redirectUri)
             .withAssertionClaims(assertionClaims)
             .withClaims(claims)
             .withPurpose('We want to check your details are correct before allowing you to formally accept any job offers.')
@@ -117,7 +122,7 @@ app.post('/token', async (req, res) => {
         });
         await verifyidclient.setUpClient();
         const request = new TokenRequestBuilder()
-            .withRedirectUri('http://localhost:4201/profile')
+            .withRedirectUri(redirectUri)
             .withCode(req.body.code)
             .build();
         const token = await verifyidclient.token(request);
@@ -228,3 +233,5 @@ const userValidation = data => {
 }
 
 app.listen(port, () => { console.log('Started on port', port) });
+
+
