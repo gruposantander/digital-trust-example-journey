@@ -1,7 +1,8 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { SDKService } from './services/sdk.service';
 import { Router } from '@angular/router';
+import { SDKService } from './services/sdk.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +23,13 @@ export class AppComponent {
   public viewNotifications = false;
 
   constructor(
-    private router: Router,
-    public readonly sdkService: SDKService
+    public readonly sdkService: SDKService,
+    private readonly router: Router,
+    private readonly userService: UserService
   ) { }
 
   public clickNotifications(): void {
-    this.viewNotifications = !this.viewNotifications;
+    this.userService.reset().subscribe(() => this.viewNotifications = !this.viewNotifications);
   }
 
   public clickProfile(): void {

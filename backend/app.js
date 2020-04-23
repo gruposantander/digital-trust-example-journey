@@ -172,7 +172,7 @@ app.post('/verified', async (req, res) => {
 app.patch('/reset', async (req, res) => {
     userDetails = defaultUserDetails;
     verified = false;
-    res.status(200).send('Successfully reset');
+    res.status(200).json({ message: 'Successfully reset' });
 });
 
 function addSharedData(tokenObject) {

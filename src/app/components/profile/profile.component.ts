@@ -64,13 +64,13 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  private getUser() {
+  private getUser(): void {
     this.userService.getUserDetails().subscribe(res =>
       this.userDetails = res
     );
   }
 
-  private getVerified() {
+  private getVerified(): void {
     this.userService.getUserVerified().subscribe(
       () => this.verified = true,
       () => this.verified = false

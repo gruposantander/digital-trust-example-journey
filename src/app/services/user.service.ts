@@ -25,4 +25,10 @@ export class UserService {
       this.http.get(`${config.apiBaseUrl}/verified`).pipe(take(1))
     ));
   }
+
+  public reset(): Observable<any> {
+    return this.configService.getConfig().pipe(switchMap((config: Config) =>
+      this.http.patch(`${config.apiBaseUrl}/reset`, {}).pipe(take(1))
+    ));
+  }
 }
