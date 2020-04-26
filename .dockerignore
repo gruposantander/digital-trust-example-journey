@@ -1,1 +1,10 @@
 backend/node_modules
+node_modules
+npm-debug.log
+src
+.git
+.DS_Store
+.nyc_output
+coverage
+.vscode
+.env

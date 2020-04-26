@@ -4,15 +4,22 @@ const bodyParser = require('body-parser');
 const { Claims, AssertionClaims, Address } = require('@gruposantander/rp-client-typescript').Model
 const { VerifiedIdClient, InitiateAuthorizeRequestBuilder, TokenRequestBuilder } = require('@gruposantander/rp-client-typescript').Client
 const Joi = require('@hapi/joi');
-const resolve = require('path').resolve
+const resolve = require('path').resolve;
+const schedule = require('node-schedule');
 
 const port = process.env.PORT || 8000;
 const wellKnown = process.env.WELL_KNOWN_URL || 'https://live.iamid.io/.well-known/openid-configuration';
 const clientId = process.env.CLIENT_ID || 'Ds2UChhNmck7Jcakyxvgi';
 const redirectUri = process.env.REDIRECT_URI ||  'http://localhost:4201/profile';
 const staticsFolderRelativePath = process.env.STATICS_FOLDER || '/../dist/digital-id-example-frontend';
+const cronSchedule = process.env.CRON_RESET_SCHEDULE || '*/1 * * * *';
 
 let verified = false;
+let resetScheduler = schedule.scheduleJob(cronSchedule, function(){
+    verified = false;
+    userDetails = defaultUserDetails;
+  });
+
 let defaultUserDetails = {
     title: "Mrs",
     given_name: "Laura",
