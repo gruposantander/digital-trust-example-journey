@@ -1,42 +1,51 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const { Claims, AssertionClaims, Address } = require('@gruposantander/rp-client-typescript').Model
+const { Claims, AssertionClaims, Address, Balance} = require('@gruposantander/rp-client-typescript').Model
 const { VerifiedIdClient, InitiateAuthorizeRequestBuilder, TokenRequestBuilder } = require('@gruposantander/rp-client-typescript').Client
 const Joi = require('@hapi/joi');
-const resolve = require('path').resolve
+const resolve = require('path').resolve;
+const schedule = require('node-schedule');
 
 const port = process.env.PORT || 8000;
 const wellKnown = process.env.WELL_KNOWN_URL || 'https://live.iamid.io/.well-known/openid-configuration';
 const clientId = process.env.CLIENT_ID || 'Ds2UChhNmck7Jcakyxvgi';
 const redirectUri = process.env.REDIRECT_URI ||  'http://localhost:4201/profile';
 const staticsFolderRelativePath = process.env.STATICS_FOLDER || '/../dist/digital-id-example-frontend';
+const cronSchedule = process.env.CRON_RESET_SCHEDULE || '*/10 * * * *';
 
 let verified = false;
+let resetScheduler = schedule.scheduleJob(cronSchedule, function(){
+    verified = false;
+    userDetails = defaultUserDetails;
+  });
+
 let defaultUserDetails = {
-    title: "Mrs",
-    given_name: "Laura",
-    family_name: "Lavine",
-    country_of_birth: "GB",
-    address: {
-        street_address: '91, Savannah Falls',
-        locality: 'Rotherham',
-        postal_code: 'CE0YYW',
-        country: 'United Kingdom',
+    "title": "Mrs",
+    "given_name": "Yost",
+    "family_name": "Hilton",
+    "country_of_birth": "GB",
+    "address": {
+        "street_address": "19 Kacey Forest",
+        "locality": "Redding",
+        "postal_code": "QZBAD9",
+        "country": "United Kingdom"
     }
 }
-let userDetails = {
-    title: "Mrs",
-    given_name: "Laura",
-    family_name: "Lavine",
-    country_of_birth: "GB",
-    address: {
-        street_address: '91, Savannah Falls',
-        locality: 'Rotherham',
-        postal_code: 'CE0YYW',
-        country: 'United Kingdom',
+let userDetails = 
+    {
+        "title": "Mrs",
+        "given_name": "Yost",
+        "family_name": "Hilton",
+        "country_of_birth": "GB",
+        "address": {
+            "street_address": "19 Kacey Forest",
+            "locality": "Redding",
+            "postal_code": "QZBAD9",
+            "country": "United Kingdom"
+        }
     }
-}
+
 
 app.use( express.static( __dirname + staticsFolderRelativePath))
 app.use('/profile', express.static( __dirname + staticsFolderRelativePath))
@@ -79,7 +88,10 @@ app.get('/initiate-authorize', async (req, res) => {
         .withAssertion(Address.postalCode().eq(userDetails.address.postal_code))
         .withAssertion(Address.country().eq(userDetails.address.country))
         .withPurpose('We want to verify your address is correct, so that we can address any correspondence with you, and between yourself and any future employers correctly in a professional manner. We also need to ensure that you have a place of residence within the UK.')
-
+    // assertionClaims.lastYearMoneyIn()
+    //     .withAssertion(Balance.currency().eq("GBP"))
+    //     .withAssertion(Balance.amount().gt(30000.00))
+    //     .withIAL(3)
     let verifyidclient;
     try {
         verifyidclient = await VerifiedIdClient.createInstance({

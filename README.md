@@ -2,6 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
 
+You can use this repo as an example for implementing an end to end application interacting with the Digital Trust Protocol server. It uses the [DTP Typescrypt SDK](https://github.com/gruposantander/digital-trust-typescript-sdk) and is connected the DTP Sandbox.
+
+To learn more about DTP, register your test client application and try/learn the calls and endpoints the SDK will be interacting with, please refer to the additional documentation that can be found [here](https://gruposantander.github.io/digital-trust-docs/).
+
+This repo consists in both front-end and backend (the one interacting with DTP using the SDK). You can run both in isolation or use the Dockerfile to expose both as a single application.
+
 ### Development server
 
 Run `npm run start` for a dev server. Navigate to `http://localhost:4201/`. The app will automatically reload if you change any of the source files.
@@ -35,8 +41,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Use these credentials for the Santander login to use the dummy account associated with this profile: 
 ```
 {
-	"user": "MB6anukh7u9",
-	"pass": "Testing123!"
+	"user": "hilton",
+	"pass": "123"
 }
 ```
 
@@ -66,19 +72,20 @@ Attach a query param of `value=${VERIFIED_VALUE}` to this endpoint. Anything apa
 
 #### PATCH /reset
 Resets to default values for userDetails and verified returns to false. The default userDetails are as follows:
-```
+
+```json
 {
-    title: "Mrs",
-    given_name: "Laura",
-    family_name: "Lavine",
-    country_of_birth: "GB",
-    address: {
-        street_address: '91, Savannah Falls',
-        locality: 'Rotherham',
-        postal_code: 'CE0YYW',
-        country: 'United Kingdom',
+        "title": "Mrs",
+        "given_name": "Yost",
+        "family_name": "Hilton",
+        "country_of_birth": "GB",
+        "address": {
+            "street_address": "19 Kacey Forest",
+            "locality": "Redding",
+            "postal_code": "QZBAD9",
+            "country": "United Kingdom"
+        }
     }
-}
 ```
 
 ### Backend endpoints in quickjobs application
