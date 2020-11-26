@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
 
-You can use this repo as an example for implementing an end to end application interacting with the Digital Trust Protocol server. It uses the [DTP Typescrypt SDK](https://github.com/gruposantander/digital-trust-typescript-sdk) and is connected the DTP Sandbox.
+You can use this repo as an example for implementing an end to end application interacting with the Digital Trust Protocol server. It uses the [DTP Typescript SDK](https://github.com/gruposantander/digital-trust-typescript-sdk) and is connected the DTP Sandbox.
 
 To learn more about DTP, register your test client application and try/learn the calls and endpoints the SDK will be interacting with, please refer to the additional documentation that can be found [here](https://gruposantander.github.io/digital-trust-docs/).
 
