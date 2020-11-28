@@ -48,7 +48,11 @@ Since we host some [dependencies](https://github.com/gruposantander/digital-trus
 
 ### Registering your own application
 
-In case you want to use this project to register your own application, make sure to follow the [generation keys steps from our documentation.](https://gruposantander.github.io/digital-trust-docs/docs/quick_development_guide#annex-5-generate-your-publicprivate-keys). Afterwards, you can populate `.env` with your `APP_*` values and run our tasks `registration:create` and `registration:submit` to submit your application to our OpenId Provider (OP). Your credentials will be written in `backend/registration-reponse.json`. Make sure to update your `CLIENT_ID` inside your `.env` from that file before restarting the application.
+In case you want to use this project to register your own application, make sure to follow the [generation keys steps from our documentation.](https://gruposantander.github.io/digital-trust-docs/docs/quick_development_guide#annex-5-generate-your-publicprivate-keys). Afterwards, you can populate `.env` with your `APP_*` values and run our tasks `register:create` and `register:submit` to submit your application to our OpenId Provider (OP).
+
+Modify the file `registration-tmpl.js` if you also want to change your logo, policy or terms and conditions links.
+
+Your credentials will be written in `backend/registration-reponse.json`. Make sure to update your `CLIENT_ID` inside your `.env` from that file before restarting the application.
 
 ### Interacting with the backend
 
