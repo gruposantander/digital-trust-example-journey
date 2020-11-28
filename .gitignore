@@ -47,3 +47,14 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Env variables
+.env
+
+# Keys
+*.pem
+*-jwk*
+
+# Registration JSON Generated files
+registration-request.json
+registration-response.json

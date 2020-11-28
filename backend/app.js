@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -32,7 +33,7 @@ let defaultUserDetails = {
         "country": "United Kingdom"
     }
 }
-let userDetails = 
+let userDetails =
     {
         "title": "Mrs",
         "given_name": "Yost",
