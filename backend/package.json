@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@gruposantander/rp-client-typescript": "~0.4.2",
+    "@gruposantander/rp-client-typescript": "github:gruposantander/digital-trust-typescript-sdk",
     "@hapi/joi": "^17.1.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
