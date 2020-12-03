@@ -38,13 +38,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Since the backend relies in some environment variables, you need to create a new `.env` file. Use `cp .env.example .env` inside the `backend` folder to add your own configuration variables.
 
-### Setup npm token
-
-Since we host some [dependencies](https://github.com/gruposantander/digital-trust-example-journey/blob/ab48fa797d5a5c7e34714cfcee473e28c3d65661/backend/package.json#L14) in GitHub, you need to create a [personal access token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) with the `read:packages` scope selected. Upon creation, change the value `NPM_CONFIG_TOKEN` in `backend/.env` for your own token.
-
 ### Running backend
 
-`cd backend/` to get into the backend folder. Run `npm run start:watch` to get nodemon to start running on port 8000. Running with nodemon means any changes saved, update and rerun the local server. If you face issues making requests - unset proxies in terminal, make sure you're out of the VPN and check computer clock is correct (JWT needs correct time).
+`cd backend/` to get into the backend folder. Run `npm i` and then `npm run start:watch` to get nodemon to start running on port 8000. Running with nodemon means any changes saved, update and rerun the local server. If you face issues making requests - unset proxies in terminal, make sure you're out of the VPN and check computer clock is correct (JWT needs correct time).
 
 ### Registering your own application
 
